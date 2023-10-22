@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <div class="canvas"></div>
+</body>
+</html>
+
+<style>
+    .canvas {
+        display: grid;
+        grid-template-columns: repeat(3, 200px);
+        gap: 10px;
+    }
+</style>
+
+<script>
+    //your_image.jpg
+
+    let canvas = document.querySelector('.canvas');
+    let image = new Image();
+    image.src = 'your_image.jpg';
+
+    image.onload = function() {
+        let rowNum = 3;
+        let colNum = 3;
+        // let arr = [];
+
+        // for(let i = 0; i < rowNum; i++) {
+        //     for(let j = 0; j < colNum; j++) {
+        //         arr.push({row: i, col: j});
+        //     }
+        // }
+
+        let arr = [
+            {row: 0, col: 0},
+            {row: 0, col: 1},
+            {row: 0, col: 2},
+            {row: 1, col: 0},
+            {row: 1, col: 1},
+            {row: 1, col: 2},
+            {row: 2, col: 0},
+            {row: 2, col: 1},
+            {},
+        ];
+
+        drawPic(arr);
+
+        function drawPic(arr) {
+            canvas.innerHTML = '';
+            let widthPic = image.width / rowNum;
+            let heightPic = image.height / colNum;
+
+            arr.forEach(item => {
+                let chunk = document.createElement('canvas');
+                chunk.width = widthPic;
+                chunk.heightPic = heightPic;
+
+                let ctx = chunk.getContext('2d');
+
+                let x = item.col * widthPic;
+                let y = item.row * heightPic;
+
+                ctx.drawImage(image, x, y, widthPic, heightPic, 0, 0, widthPic, heightPic);
+
+                let div = document.createElement('div');
+                div.appendChild(chunk);
+                canvas.appendChild(div);
+            });          
+        }
+
+        function arrowLIeft() {
+            arr.forEach((item, i) => {                
+                if(Object.getOwnPropertyNames(item).length === 0) {
+                    // console.log(arr[i - 1].col)
+                    if (arr[i - 1].col == colNum - 1) {
+                        // console.log(arr);
+                        return arr;
+                    } else {
+                        let temp1 = arr[i - 1];
+                        let temp2 = arr[i];
+                        // console.log(temp)
+                        arr[i] = temp1;
+                        arr[i - 1] = temp2;
+                    }
+                }                
+            })
+            drawPic(arr);
+        }
+
+        function clickBtn(e) {
+            if(e.key == 'ArrowLeft') {
+                arrowLIeft();
+            }
+        }
+
+        window.addEventListener('keydown', clickBtn);
+    }
+
+
+</script>
+
