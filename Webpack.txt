@@ -89,4 +89,81 @@ output: {
 		new HtmlWebpackPlugin(),
 	],
 
-- 
+
+------ Подключаем реакт ------
+
+-- Подключаем babel
+	npm install --save-dev babel-loader @babel/core
+
+{
+  module: {
+    rules: [
+      {
+        test: /\.m?js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      }
+    ]
+  }
+}
+
+-- Подключаем preset (преобразовывает код для старых браузеров)
+
+	npm install @babel/preset-env --save-dev
+
+	{
+		"presets": ["@babel/preset-env"]
+	} - !!!!!!!уже имеется
+
+-- устанавливает preset, который будет понимать jsx разметку
+
+npm install --save-dev @babel/preset-react
+
+
+-- скопируем правило в config
+
+{
+  module: {
+    rules: [
+      {
+        test: /\.m?jsx$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react']
+          }
+        }
+      }
+    ]
+  }
+}
+
+-- меняем входной файл на jsx
+
+entry: "/src/index.jsx"
+
+
+-- устанавливаеи polyfill (что бы babel работал правильно)
+
+npm install --save @babel/polyfill
+
+
+-- делаем полифил второй входной точкой в приложение:
+
+module.exports = {
+  entry: ["@babel/polyfill"],
+};
+
+-- меняем расширение базового js на jsx
+
+-- устанавливаем react и reaect-dom
+
+npm i --save react react-dom
+
+- создаём папку components и импортируем React (import React from 'react-dom')

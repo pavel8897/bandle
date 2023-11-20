@@ -5,7 +5,7 @@ import {CleanWebpackPlugin} from 'clean-webpack-plugin';
 
 export default {
 	mode: 'development',
-	entry: './src/index.js',
+	entry: ['@babel/polyfill', './src/index.jsx'],
     plugins: [
         new MiniCssExtractPlugin({
             filename: '[name].[contenthash].css'
@@ -24,6 +24,26 @@ export default {
             {
                 test: /\.css$/i,
 				use: [MiniCssExtractPlugin.loader, 'css-loader'],
+            },
+            {
+                test: /\.m?js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
+                }
+            },
+            {
+                test: /\.m?jsx$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: ['@babel/preset-react', '@babel/preset-env']
+                    }
+                }
             }
         ]
     }
