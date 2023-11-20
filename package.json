@@ -4,7 +4,8 @@
         "build": "webpack",
         "dev": "webpack --mode development",
         "prod": "webpack --mode production",
-        "watch": "webpack --mode development --watch"
+        "watch": "webpack --mode development --watch",
+        "start": "webpack serve --mode development"
     },
     "devDependencies": {
         "clean-webpack-plugin": "^4.0.0",
@@ -13,7 +14,8 @@
         "mini-css-extract-plugin": "^2.7.6",
         "style-loader": "^3.3.3",
         "webpack": "^5.88.2",
-        "webpack-cli": "^5.1.4"
+        "webpack-cli": "^5.1.4",
+        "webpack-dev-server": "^4.15.1"
     },
     "dependencies": {
         "normalize.css": "^8.0.1"
